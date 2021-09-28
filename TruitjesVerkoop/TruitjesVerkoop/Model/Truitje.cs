@@ -10,7 +10,7 @@ namespace BusinessLayer.Model
     {
         // Constructors
         public Kledingmaat Kledingmaat { get; private set;}
-        public double Prijs { get; private set;}
+        public decimal Prijs { get; private set;}
         public int Id { get; private set;}
         public string Seizoen { get; private set;}
     }
