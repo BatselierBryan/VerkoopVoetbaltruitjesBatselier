@@ -9,7 +9,13 @@ namespace BusinessLayer.Model
     class Clubset
     {
         // Constructors
-        public string Thuis { get; private set;} // vs uit
+        public string ThuisUit { get; private set;}
         public int Versie { get; private set;}
+
+        public Clubset(string thuisUit, int versie)
+        {
+            ThuisUit = thuisUit;
+            Versie = versie;
+        }
     }
 }

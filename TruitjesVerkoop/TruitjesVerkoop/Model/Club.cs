@@ -11,5 +11,11 @@ namespace BusinessLayer.Model
         // Constructors
         public string Competitie { get; private set;}
         public string Ploegnaam { get; private set;}
+
+        public Club(string competitie, string ploegnaam)
+        {
+            Competitie = competitie;
+            Ploegnaam = ploegnaam;
+        }
     }
 }

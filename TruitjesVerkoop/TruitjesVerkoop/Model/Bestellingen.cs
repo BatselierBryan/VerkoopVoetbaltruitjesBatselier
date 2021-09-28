@@ -14,6 +14,14 @@ namespace BusinessLayer.Model
         public bool IsBetaald { get; private set;}
         public decimal VerkoopPrijs { get; private set;}
 
+        public Bestellingen(int bestellingsnummer, DateTime datum, bool isBetaald, decimal verkoopPrijs)
+        {
+            Bestellingsnummer = bestellingsnummer;
+            Datum = datum;
+            IsBetaald = isBetaald;
+            VerkoopPrijs = verkoopPrijs;
+        }
+
         //Methodes
         public void VoegTruitjeToe()
         {

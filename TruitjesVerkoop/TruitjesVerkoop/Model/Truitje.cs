@@ -13,5 +13,13 @@ namespace BusinessLayer.Model
         public decimal Prijs { get; private set;}
         public int Id { get; private set;}
         public string Seizoen { get; private set;}
+
+        public Truitje(Kledingmaat kledingmaat, decimal prijs, int id, string seizoen)
+        {
+            Kledingmaat = kledingmaat;
+            Prijs = prijs;
+            Id = id;
+            Seizoen = seizoen;
+        }
     }
 }
