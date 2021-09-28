@@ -21,7 +21,7 @@ namespace BusinessLayer.Model
         }
 
         //Methodes
-        public int Korting(List<Bestellingen> bestellingenKlant)
+        public int Korting(List<Bestelling> bestellingenKlant)
         {
             int percentage = 0;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    class Bestellingen
+    class Bestelling
     {
         //Constructor
         public int Bestellingsnummer { get; private set;}
@@ -14,7 +14,7 @@ namespace BusinessLayer.Model
         public bool IsBetaald { get; private set;}
         public decimal VerkoopPrijs { get; private set;}
 
-        public Bestellingen(int bestellingsnummer, DateTime datum, bool isBetaald, decimal verkoopPrijs)
+        public Bestelling(int bestellingsnummer, DateTime datum, bool isBetaald, decimal verkoopPrijs)
         {
             Bestellingsnummer = bestellingsnummer;
             Datum = datum;
