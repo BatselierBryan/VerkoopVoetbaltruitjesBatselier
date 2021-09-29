@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model.Exceptions
 {
-    class VoetbaltruitjesException : Exception
+   public class VoetbaltruitjesException : Exception
     {
         public VoetbaltruitjesException(string message) : base(message)
         {

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    class Klant
+    public class Klant
     {
         //Constructor
         public int KlantenId { get; private set;}
         public string Naam { get; private set;}
         public string Adres { get; private set;}
+
+        public Dictionary<Klant, List<Bestelling>> Bestellingen = new Dictionary<Klant, List<Bestelling>>();
 
         public Klant(int klantenId, string naam, string adres)
         {
@@ -21,9 +23,10 @@ namespace BusinessLayer.Model
         }
 
         //Methodes
-        public int Korting(List<Bestelling> bestellingenKlant)
+        public int Korting(Klant klant)
         {
             int percentage = 0;
+            List<Bestelling> bestellingenKlant = Bestellingen[klant];
 
             if (bestellingenKlant.Count() >= 5)
             {
@@ -36,19 +39,27 @@ namespace BusinessLayer.Model
             return percentage;
         }
 
-        public void VoegBestellingToe()
+        public void VoegBestellingToe(Klant klant, Bestelling bestelling)
         {
+            List<Bestelling> bestellingen = Bestellingen[klant];
+            bestellingen.Add(bestelling);
 
+            Bestellingen[klant] = bestellingen;
         }
         
-        public void VerwijderBestelling()
+        public void VerwijderBestelling(Klant klant, Bestelling bestelling)
         {
+            List<Bestelling> bestellingen = Bestellingen[klant];
+            bestellingen.Remove(bestelling);
 
+            Bestellingen[klant] = bestellingen;
         }
 
-        public void GeefBestellingen()
+        public List<Bestelling> GeefBestellingen(Klant klant)
         {
+            List<Bestelling> bestellingen = Bestellingen[klant];
 
+            return bestellingen;
         }
     }
 }

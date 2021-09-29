@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    class Club
+    public class Club
     {
         // Constructors
         public string Competitie { get; private set;}

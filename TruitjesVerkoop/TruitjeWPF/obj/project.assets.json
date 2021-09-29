@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0-windows7.0": {}
+    "net5.0-windows7.0": {
+      "BusinessLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/BusinessLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BusinessLayer.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "BusinessLayer/1.0.0": {
+      "type": "project",
+      "path": "../TruitjesVerkoop/BusinessLayer.csproj",
+      "msbuildProject": "../TruitjesVerkoop/BusinessLayer.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0-windows7.0": []
+    "net5.0-windows7.0": [
+      "BusinessLayer >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Bryan\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Bryan\\Desktop\\HOGent\\TweedeJaar\\Programmeren Specialisatie\\Voetbal Truitjes (Les 01)\\VerkoopVoetbaltruitjesBatselier\\TruitjesVerkoop\\TruitjesVerkoop\\BusinessLayer.csproj": {
+              "projectPath": "C:\\Users\\Bryan\\Desktop\\HOGent\\TweedeJaar\\Programmeren Specialisatie\\Voetbal Truitjes (Les 01)\\VerkoopVoetbaltruitjesBatselier\\TruitjesVerkoop\\TruitjesVerkoop\\BusinessLayer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

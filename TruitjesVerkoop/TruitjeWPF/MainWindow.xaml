@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="btnZetBetaald" Content="Zet Betaald" HorizontalAlignment="Left" Margin="53,45,0,0" VerticalAlignment="Top" Height="68" Width="133" Click="btnZetBetaald_Click"/>
+        <TextBox x:Name="txtBestellingsnummer" HorizontalAlignment="Left" Height="44" Margin="267,69,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
+        <TextBox x:Name="txtDatum" HorizontalAlignment="Center" Height="44" Margin="0,69,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"/>
+        <TextBox x:Name="txtIsBetaald" HorizontalAlignment="Left" Height="44" Margin="465,69,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
+        <TextBox x:Name="txtVerkoopprijs" HorizontalAlignment="Left" Height="44" Margin="570,69,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="71"/>
 
     </Grid>
 </Window>

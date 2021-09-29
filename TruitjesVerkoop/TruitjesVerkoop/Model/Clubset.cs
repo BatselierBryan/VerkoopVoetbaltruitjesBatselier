@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Model
 {
-    class Clubset
+    public class Clubset
     {
         // Constructors
         public string ThuisUit { get; private set;}
