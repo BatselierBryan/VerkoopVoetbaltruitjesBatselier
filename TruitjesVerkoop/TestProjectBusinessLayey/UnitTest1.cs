@@ -30,5 +30,21 @@ namespace TestProjectBusinessLayer
             var ex = Assert.Throws<VoetbaltruitjesException>(() => truitje.ZetId(id));
             Assert.Equal("Voetbaltruitje - invalid id", ex.Message);
         }
+
+        [Fact]
+        public void Test_ZetClub_ValidReference()
+        {
+            Truitje truitje = new Truitje(Kledingmaat.M, 15.25, "Testseizoen", new Club("Premier league", "City"), new Clubset(true, 1));
+            Club club = new Club("Premier league", "Leicester");
+            truitje.ZetClub(club);
+            Assert.Equal(club, truitje.Club);
+        }
+
+        [Fact]
+        public void Test_ZetClub_InValid()
+        {
+            Truitje truitje = new Truitje(Kledingmaat.M, 15.25, "Testseizoen", new Club("Premier league", "City"), new Clubset(true, 1));
+            Assert.Throws<VoetbaltruitjesException>(() => truitje.ZetClub(null));
+        }
     }
 }

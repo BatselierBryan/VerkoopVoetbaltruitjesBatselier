@@ -22,5 +22,17 @@ namespace BusinessLayer.Model
             Competitie = competitie;
             Ploegnaam = ploegnaam;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Club club &&
+                   Competitie == club.Competitie &&
+                   Ploegnaam == club.Ploegnaam;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Competitie, Ploegnaam);
+        }
     }
 }
