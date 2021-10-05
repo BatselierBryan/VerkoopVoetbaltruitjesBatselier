@@ -14,6 +14,7 @@ namespace BusinessLayer.Model
         public bool IsBetaald { get; private set;}
         public decimal VerkoopPrijs { get; private set;}
 
+        //Key misschien veranderen naar een int (voor bestellingsnummer te geven zogezegd)?
         public Dictionary<Bestelling, List<Truitje> > Truitjes = new Dictionary<Bestelling, List<Truitje>>();
 
         public Bestelling(int bestellingsnummer, DateTime datum, bool isBetaald, decimal verkoopPrijs)
