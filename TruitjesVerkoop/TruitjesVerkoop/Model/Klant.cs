@@ -3,63 +3,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer.Model.Exceptions;
 
 namespace BusinessLayer.Model
 {
     public class Klant
     {
         //Constructor
-        public int KlantenId { get; private set;}
+        public int KlantId { get; private set;}
         public string Naam { get; private set;}
         public string Adres { get; private set;}
 
-        public Dictionary<Klant, List<Bestelling>> Bestellingen = new Dictionary<Klant, List<Bestelling>>();
+        private List<Bestelling> _bestellingen = new List<Bestelling>();
 
-        public Klant(int klantenId, string naam, string adres)
+        internal Klant(int klantId, string naam, string adres)
         {
-            KlantenId = klantenId;
+            KlantId = klantId;
             Naam = naam;
             Adres = adres;
         }
 
-        //Methodes
-        public int Korting(Klant klant)
+        //Methodes -> overerven van interface
+        //zetklantid
+        //zetnaam
+        //zetadres
+        //heeftbestelling
+        //tostring
+        //totext kan als debug
+        //show
+        //altijd exceptions gebruiken
+        public IReadOnlyList<Bestelling> GetBestellingen()
         {
-            int percentage = 0;
-            List<Bestelling> bestellingenKlant = Bestellingen[klant];
-
-            if (bestellingenKlant.Count() >= 5)
-            {
-                percentage = 10;
-            }else if(bestellingenKlant.Count() >= 10)
-            {
-                percentage = 20;
-            }
-
-            return percentage;
+            return _bestellingen.AsReadOnly();
+        }
+        public int Korting()
+        {
+            if(_bestellingen.Count < 5) return 0;
+            if(_bestellingen.Count > 10) return 10;
+            else return 20;
         }
 
-        public void VoegBestellingToe(Klant klant, Bestelling bestelling)
+        public void VoegBestellingToe(Bestelling bestelling) //Check of bestelling niet null is, check of bestelling niet in list zit, anders toevoegen
         {
-            List<Bestelling> bestellingen = Bestellingen[klant];
-            bestellingen.Add(bestelling);
-
-            Bestellingen[klant] = bestellingen;
+            if (bestelling == null) throw new KlantException("Klant : Verwijderbestelling - bestelling is null");
+            if (_bestellingen.Contains(bestelling))
+            {
+                throw new KlantException("Klant : AddBestelling - bestelling already exists");
+            } else
+            {
+                _bestellingen.Add(bestelling);
+                if (bestelling.Klant == this)
+                {
+                    bestelling.ZetKlant();
+                    _bestellingen.Add(bestelling);
+                }
+            }
         }
         
-        public void VerwijderBestelling(Klant klant, Bestelling bestelling)
+        public void VerwijderBestelling(Bestelling bestelling)
         {
-            List<Bestelling> bestellingen = Bestellingen[klant];
-            bestellingen.Remove(bestelling);
-
-            Bestellingen[klant] = bestellingen;
+            if (bestelling == null) throw new KlantException("Klant : Verwijderbestelling - bestelling is null");
+            if (_bestellingen.Contains(bestelling))
+            {
+                throw new KlantException("Klant : RemoveBestelling - bestelling does not exist");
+            } else
+            {
+                _bestellingen.Add(bestelling);
+                if (bestelling.Klant == this)
+                {
+                    bestelling.VerwijderKlant();
+                    _bestellingen.Add(bestelling);
+                }
+            }
         }
 
-        public List<Bestelling> GeefBestellingen(Klant klant)
+        public bool HeeftBestelling(Bestelling bestelling)
         {
-            List<Bestelling> bestellingen = Bestellingen[klant];
-
-            return bestellingen;
+            if (_bestellingen.Contains(bestelling)) return true;
+            else return false;
         }
     }
 }

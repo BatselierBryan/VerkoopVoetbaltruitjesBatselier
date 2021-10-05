@@ -50,23 +50,22 @@ namespace BusinessLayer.Model
             if (club == null) throw new VoetbaltruitjesException("Club == null");
             Club = club;
         }
-
-        // Hoeft niet
-        //public void ZetSeizoen(string seizoen)
-        //{
-
-        //}
         public void ZetClubset(Clubset clubset)
         {
             if (clubset == null) throw new VoetbaltruitjesException("Clubset == null");
             Clubset = clubset;
         }
+        // Hoeft niet
+        //public void ZetSeizoen(string seizoen)
+        //{
+
+        //}
 
 
         //Alles geven van variabelen
         public override string ToString()
         {
-            return base.ToString();
+            return ($"{Id}, {Kledingmaat}, {Seizoen}, {Club}, {Clubset}, {Prijs}");
         }
 
         public override bool Equals(object obj)
