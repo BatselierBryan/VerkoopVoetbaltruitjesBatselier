@@ -16,7 +16,7 @@ namespace BusinessLayer.Model
 
         private List<Bestelling> _bestellingen = new List<Bestelling>();
 
-        internal Klant(int klantId, string naam, string adres)
+        public Klant(int klantId, string naam, string adres)
         {
             KlantId = klantId;
             Naam = naam;
@@ -54,8 +54,7 @@ namespace BusinessLayer.Model
                 _bestellingen.Add(bestelling);
                 if (bestelling.Klant == this)
                 {
-                    //bestelling.ZetKlant();
-                    _bestellingen.Add(bestelling);
+                    bestelling.ZetKlant(this);
                 }
             }
         }

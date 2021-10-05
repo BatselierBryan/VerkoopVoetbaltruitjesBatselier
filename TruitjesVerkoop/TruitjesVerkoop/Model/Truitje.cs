@@ -19,30 +19,30 @@ namespace BusinessLayer.Model
 
         public Truitje(int id, Kledingmaat kledingmaat, double prijs, string seizoen, Club club, Clubset clubset)
         {
-            Id = id;
+            ZetId(id);
             Kledingmaat = kledingmaat;
-            Prijs = prijs;
+            ZetPrijs(prijs);
             Seizoen = seizoen;
-            Club = club;
-            Clubset = clubset;
+            ZetClub(club);
+            ZetClubset(clubset);
         }
         public Truitje(Kledingmaat kledingmaat, double prijs, string seizoen, Club club, Clubset clubset)
         {
             Kledingmaat = kledingmaat;
-            Prijs = prijs;
+            ZetPrijs(prijs);
             Seizoen = seizoen;
-            Club = club;
-            Clubset = clubset;
+            ZetClub(club);
+            ZetClubset(clubset);
         }
 
         public void ZetId(int id)
         {
-            if (id <= 0) throw new VoetbaltruitjesException("Voetbaltruitje - invalid id");
+            if (id <= 0) throw new VoetbaltruitjesException("Truitje - invalid id");
             Id = id;
         }
         public void ZetPrijs(double prijs)
         {
-            if (prijs <= 0) throw new VoetbaltruitjesException("Voetbaltruitje - invalid prijs");
+            if (prijs <= 0) throw new VoetbaltruitjesException("Truitje - invalid prijs");
             Prijs = prijs;
         }
         public void ZetClub(Club club)

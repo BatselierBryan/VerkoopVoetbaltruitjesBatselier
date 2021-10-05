@@ -14,13 +14,13 @@ namespace BusinessLayer.Model
         public int Bestellingsnummer { get; private set;}
         public DateTime Datum { get; private set;}
         public bool IsBetaald { get; private set;}
-        public decimal VerkoopPrijs { get; private set;}
+        public double VerkoopPrijs { get; private set;}
         public Klant Klant { get; private set; }
 
         private Dictionary<Truitje, int> _producten = new Dictionary<Truitje, int>();
 
         //id en tijdstip / id, klant en tijdstip / id, klant, tijdstip, dictionary producten // id, klant, tijdstip, prijs, betaald, dictionary producten -> allemaal internal constructors
-        public Bestelling(int bestellingsnummer, DateTime datum, bool isBetaald, decimal verkoopPrijs, Klant klant)
+        public Bestelling(int bestellingsnummer, DateTime datum, bool isBetaald, double verkoopPrijs, Klant klant)
         {
             Bestellingsnummer = bestellingsnummer;
             Datum = datum;
@@ -48,9 +48,22 @@ namespace BusinessLayer.Model
             //aantal == verwijderen uit lijst, aantal > exception, aantal < verminderen van lijst
         }
 
-        public void ZetBetaald()
+        public void ZetBetaald(bool betaald = true)
         {
-            IsBetaald = true;
+            IsBetaald = betaald;
+            if (betaald)
+            {
+               // VerkoopPrijs = kostPrijs();
+            } else
+            {
+                VerkoopPrijs = 0.0;
+            }
+        }
+
+        public void ZetTijdstip(DateTime tijdstip)
+        {
+            if (tijdstip == null) throw new BestellingException("Bestelling - invalid tijdstip");
+            Datum = tijdstip;
         }
 
         public void VerwijderKlant()

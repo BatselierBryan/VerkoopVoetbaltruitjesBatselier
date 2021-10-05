@@ -16,7 +16,7 @@ namespace BusinessLayer.Model
         public Clubset(bool thuis, int versie)
         {
             Thuis = thuis;
-            if (versie < 1) throw new VoetbaltruitjesException("Clubset - versie less than one");
+            if (versie < 1) throw new ClubsetException("Clubset - versie less than one");
             Versie = versie;
         }
 
