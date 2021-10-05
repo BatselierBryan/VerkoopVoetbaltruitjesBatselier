@@ -17,7 +17,7 @@ namespace BusinessLayer.Model
         public Club Club { get; private set; }
         public Clubset Clubset { get; private set; }
 
-        internal Truitje(int id, Kledingmaat kledingmaat, double prijs, string seizoen, Club club, Clubset clubset)
+        public Truitje(int id, Kledingmaat kledingmaat, double prijs, string seizoen, Club club, Clubset clubset)
         {
             Id = id;
             Kledingmaat = kledingmaat;
@@ -26,7 +26,7 @@ namespace BusinessLayer.Model
             Club = club;
             Clubset = clubset;
         }
-        internal Truitje(Kledingmaat kledingmaat, double prijs, string seizoen, Club club, Clubset clubset)
+        public Truitje(Kledingmaat kledingmaat, double prijs, string seizoen, Club club, Clubset clubset)
         {
             Kledingmaat = kledingmaat;
             Prijs = prijs;

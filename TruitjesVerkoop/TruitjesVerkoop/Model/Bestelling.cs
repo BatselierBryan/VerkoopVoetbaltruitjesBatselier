@@ -30,7 +30,7 @@ namespace BusinessLayer.Model
         }
 
         //Methodes
-        //zetTijdstip, zetbetaald, zetid, kostprijs (korting van klant gebruiken)
+        //zetTijdstip, zetbetaald, zetid, kostprijs (korting van klant gebruiken), zetklant (Klant = newKlant, verwijderklant (Klant = null), zetbestellingid, zettijdstip, 
         public void VoegTruitjeToe(Truitje truitje, int aantal)
         {
             if (aantal <= 0) throw new BestellingException("Voegtruitje toe - aantal");
@@ -51,6 +51,44 @@ namespace BusinessLayer.Model
         public void ZetBetaald()
         {
             IsBetaald = true;
+        }
+
+        public void VerwijderKlant()
+        {
+            Klant = null;
+        }
+        public void ZetKlant(Klant newKlant)
+        {
+            if (newKlant == null) throw new BestellingException("Bestelling - invalid klant");
+            if (newKlant == Klant) throw new BestellingException("Bestelling - ZetKlant - now new");
+            if (Klant != null)
+            {
+                if (Klant.HeeftBestelling(this))
+                {
+                    Klant.VerwijderBestelling(this);
+                }
+            }
+            if (!newKlant.HeeftBestelling(this))
+            {
+                newKlant.VoegBestellingToe(this);
+            }
+            Klant = newKlant;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Bestelling bestelling &&
+                   Bestellingsnummer == bestelling.Bestellingsnummer &&
+                   Datum == bestelling.Datum &&
+                   IsBetaald == bestelling.IsBetaald &&
+                   VerkoopPrijs == bestelling.VerkoopPrijs &&
+                   EqualityComparer<Klant>.Default.Equals(Klant, bestelling.Klant) &&
+                   EqualityComparer<Dictionary<Truitje, int>>.Default.Equals(_producten, bestelling._producten);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Bestellingsnummer, Datum, IsBetaald, VerkoopPrijs, Klant, _producten);
         }
     }
 }

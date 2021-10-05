@@ -54,7 +54,7 @@ namespace BusinessLayer.Model
                 _bestellingen.Add(bestelling);
                 if (bestelling.Klant == this)
                 {
-                    bestelling.ZetKlant();
+                    //bestelling.ZetKlant();
                     _bestellingen.Add(bestelling);
                 }
             }

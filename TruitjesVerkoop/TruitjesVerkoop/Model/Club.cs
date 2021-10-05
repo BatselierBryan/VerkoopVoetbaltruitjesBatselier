@@ -13,7 +13,7 @@ namespace BusinessLayer.Model
         public string Competitie { get; private set;}
         public string Ploegnaam { get; private set;}
 
-        internal Club(string competitie, string ploegnaam)
+        public Club(string competitie, string ploegnaam)
         {
             if (string.IsNullOrWhiteSpace(competitie) || string.IsNullOrWhiteSpace(ploegnaam))
             {
