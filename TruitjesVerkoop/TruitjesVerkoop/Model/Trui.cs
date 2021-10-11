@@ -6,6 +6,14 @@ namespace BusinessLayer
 {
     public class Trui: ITrui
     {
+        public Trui(Club club, string seizoen, double prijs, Maat kledingmaat, ClubSet clubset)
+        {
+            ZetClub(club);
+            ZetPrijs(prijs);
+            Seizoen = seizoen;
+            Kledingmaat = kledingmaat;
+            ZetClubSet(clubset);
+        }
         public Trui(int id, Club club, string seizoen, double prijs, Maat kledingmaat, ClubSet clubset)
         {
             ZetId(id);
@@ -15,15 +23,7 @@ namespace BusinessLayer
             Kledingmaat = kledingmaat;
             ZetClubSet(clubset);
         }
-        public Trui(Club club, string seizoen, double prijs, Maat kledingmaat, ClubSet clubset)
-        {
-            ZetClub(club);
-            ZetPrijs(prijs);
-            Seizoen = seizoen;
-            Kledingmaat = kledingmaat;
-            ZetClubSet(clubset);
-        }
-
+        
         public int Id { get; private set; }
 
         public Club Club { get; private set; }
@@ -38,13 +38,13 @@ namespace BusinessLayer
 
         public void ZetId(int id)
         {
-            if (id < 0) throw new TruiException("Id is lager dan 0");
+            if (id <= 0) throw new TruiException("Trui - invalid id");
             this.Id = id;
         }
 
         public void ZetPrijs(double prijs)
         {
-            if (prijs <= 0) throw new TruiException("Prijs is lager dan 0");
+            if (prijs <= 0) throw new TruiException("Trui - invalid prijs");
             this.Prijs = prijs;
         }
 
