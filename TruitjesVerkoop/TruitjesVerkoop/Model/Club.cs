@@ -1,38 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLayer.Model.Exceptions;
+using System;
+using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Model
 {
     public class Club
     {
-        // Constructors
-        public string Competitie { get; private set;}
-        public string Ploegnaam { get; private set;}
+        public string Competitie { get; private set; }
+
+        public string PloegNaam { get; private set; }
 
         public Club(string competitie, string ploegnaam)
         {
-            if (string.IsNullOrWhiteSpace(competitie) || string.IsNullOrWhiteSpace(ploegnaam))
+            if (string.IsNullOrEmpty(competitie.Trim()) ||
+                (string.IsNullOrWhiteSpace(ploegnaam.Trim())))
             {
-                throw new ClubException("Club - null or empty");               
+                throw new ClubException("Club naam/competitie is niet leeg!");
             }
+
             Competitie = competitie;
-            Ploegnaam = ploegnaam;
+            PloegNaam = ploegnaam;
         }
 
         public override bool Equals(object obj)
         {
             return obj is Club club &&
                    Competitie == club.Competitie &&
-                   Ploegnaam == club.Ploegnaam;
+                   PloegNaam == club.PloegNaam;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Competitie, Ploegnaam);
+            return HashCode.Combine(Competitie, PloegNaam);
         }
     }
 }

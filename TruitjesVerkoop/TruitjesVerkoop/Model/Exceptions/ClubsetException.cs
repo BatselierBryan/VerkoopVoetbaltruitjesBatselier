@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
-namespace BusinessLayer.Model.Exceptions
+namespace BusinessLayer.Exceptions
 {
-    public class ClubsetException : Exception
+    public class ClubSetException : Exception
     {
-        public ClubsetException(string message) : base(message)
+        public ClubSetException(string message) : base(message)
         {
         }
 
-        public ClubsetException(string message, Exception innerException) : base(message, innerException)
+        public ClubSetException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

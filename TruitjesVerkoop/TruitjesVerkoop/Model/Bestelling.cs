@@ -1,107 +1,182 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLayer.Model;
-using BusinessLayer.Model.Exceptions;
+using BusinessLayer.Exceptions;
+using BusinessLayer.Interface;
 
-namespace BusinessLayer.Model
+namespace BusinessLayer
 {
-    public class Bestelling
+    public class Bestelling : IBestelling
     {
-        //Constructor
-        public int Bestellingsnummer { get; private set;}
-        public DateTime Datum { get; private set;}
-        public bool IsBetaald { get; private set;}
-        public double VerkoopPrijs { get; private set;}
+        public int BestelNummer { get; private set; }
+
+        public bool Betaald { get; private set; }
+
         public Klant Klant { get; private set; }
 
-        private Dictionary<Truitje, int> _producten = new Dictionary<Truitje, int>();
+        public double Prijs { get; set; }
 
-        //id en tijdstip / id, klant en tijdstip / id, klant, tijdstip, dictionary producten // id, klant, tijdstip, prijs, betaald, dictionary producten -> allemaal internal constructors
-        public Bestelling(int bestellingsnummer, DateTime datum, bool isBetaald, double verkoopPrijs, Klant klant)
+        public DateTime OrderDatum { get; private set; }
+
+        private Dictionary<Trui, int> _items = new Dictionary<Trui, int>();
+
+        public Bestelling(int bestelid, DateTime tijdstip) : this(tijdstip)
         {
-            Bestellingsnummer = bestellingsnummer;
-            Datum = datum;
-            IsBetaald = isBetaald;
-            VerkoopPrijs = verkoopPrijs;
-            Klant = klant;
+            ZetBestellingId(bestelid);
+            ZetTijdstip(tijdstip);
         }
 
-        //Methodes
-        //zetTijdstip, zetbetaald, zetid, kostprijs (korting van klant gebruiken), zetklant (Klant = newKlant, verwijderklant (Klant = null), zetbestellingid, zettijdstip, 
-        public void VoegTruitjeToe(Truitje truitje, int aantal)
+        public Bestelling(int bestelid, Klant klant, DateTime tijdstip)
         {
-            if (aantal <= 0) throw new BestellingException("Voegtruitje toe - aantal");
-            if (_producten.ContainsKey(truitje))
-            {
-                _producten[truitje] += aantal;
-            } else
-            {
-                _producten.Add(truitje, aantal);
-            }
+            ZetBestellingId(bestelid);
+            this.Klant = klant;
+            ZetTijdstip(tijdstip);
         }
 
-        public void VerwijderTruitje(Truitje truitje, int aantal)
+        public Bestelling(int bestelid, Klant klant, DateTime tijdstip, Dictionary<Trui, int> producten)
         {
-            //aantal == verwijderen uit lijst, aantal > exception, aantal < verminderen van lijst
+            ZetBestellingId(bestelid);
+            this.Klant = klant;
+            ZetTijdstip(tijdstip);
+            this._items = producten;
         }
 
-        public void ZetBetaald(bool betaald = true)
+
+        public Bestelling(int bestelid, Klant klant, DateTime tijdstip, double prijs, bool betaald, Dictionary<Trui, int> producten)
         {
-            IsBetaald = betaald;
-            if (betaald)
-            {
-               // VerkoopPrijs = kostPrijs();
-            } else
-            {
-                VerkoopPrijs = 0.0;
-            }
+            ZetBestellingId(bestelid);
+            this.Klant = klant;
+            ZetTijdstip(tijdstip);
+            ZetPrijs(prijs);
+            ZetBetaald(betaald);
+            this._items = producten;
+        }
+
+        public Bestelling(DateTime tijdstip)
+        {
+            ZetTijdstip(tijdstip);
+        }
+
+
+        public void ZetBestellingId(int id)
+        {
+            if (id <= 0) throw new BestellingException("Bestelling: Id klopt niet!");
+            this.BestelNummer = BestelNummer;
+
+        }
+
+        public void ZetPrijs(double prijs)
+        {
+            if (prijs <= 0) throw new BestellingException("Bestelling - Prijs mag niet kleiner zijn dan 0");
+            this.Prijs = prijs;
         }
 
         public void ZetTijdstip(DateTime tijdstip)
         {
-            if (tijdstip == null) throw new BestellingException("Bestelling - invalid tijdstip");
-            Datum = tijdstip;
+            if (tijdstip == null) throw new BestellingException("Bestelling: Tijdstip klopt niet");
+            this.OrderDatum = tijdstip;
+        }
+        public void ZetKlant(Klant newKlant)
+        {
+            if (newKlant == null) throw new KlantException("Bestelling - invalid klant");
+            if (newKlant == Klant) throw new KlantException("Bestelling- ZetKlant - not new");
+            if (Klant != null)
+            {
+                if (Klant.HeeftBestelling(this))
+                    Klant.VerwijderBestelling(this);
+                if (!newKlant.HeeftBestelling(this))
+                newKlant.VoegBestellingToe(this);
+                Klant = newKlant;
+            }
         }
 
         public void VerwijderKlant()
         {
             Klant = null;
         }
-        public void ZetKlant(Klant newKlant)
+
+        public double KostPrijs()
         {
-            if (newKlant == null) throw new BestellingException("Bestelling - invalid klant");
-            if (newKlant == Klant) throw new BestellingException("Bestelling - ZetKlant - now new");
-            if (Klant != null)
+            double prijs = 0.0;
+            int korting;
+            if (Klant is null)
             {
-                if (Klant.HeeftBestelling(this))
+                korting = 0;
+            }
+            else
+            {
+                korting = Klant.GeefKorting();
+            }
+            foreach (KeyValuePair<Trui, int> kvp in _items)
+            {
+                prijs += kvp.Key.Prijs * kvp.Value * (100.0 - korting) / 100.0;
+            }
+            return prijs;
+        }
+
+        public IReadOnlyDictionary<Trui, int> GeefProducten()
+        {
+            foreach (KeyValuePair<Trui, int> kvp in _items)
+            {
+                Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            }
+            return _items;
+        }
+
+        public IReadOnlyDictionary<Trui, int> GeefAantalProducten()
+        {
+            Console.WriteLine("Count: {0}", _items.Count);
+            return _items;
+        }
+
+        public void VoegTruitjeToe(Trui trui, int aantal)
+        {
+            if (aantal <= 0) throw new BestellingException("Geen trui ingegeven");
+            else if (!_items.ContainsKey(trui))
+            {
+                _items.Add(trui, aantal);
+            }
+            else if (_items.ContainsKey(trui))
+            {
+                _items[trui] += aantal;
+            }
+        }
+
+        public void VerwijderTruitje(Trui trui, int aantal)
+        {
+            if (aantal <= 0) throw new BestellingException("Geen trui ingegeven!");
+            if (!_items.ContainsKey(trui)) throw new BestellingException("Er werd geen trui besteld!");
+            else
+            {
+                if (_items[trui] < aantal)
                 {
-                    Klant.VerwijderBestelling(this);
+                    throw new BestellingException("VerwijderVoetbalTruitje - beschikbaar aantal te klein");
+                }
+                else if (_items[trui] == aantal)
+                {
+                    _items.Remove(trui);
+                }
+                else
+                {
+                    _items[trui] -= aantal;
                 }
             }
-            if (!newKlant.HeeftBestelling(this))
+
+        }
+        public bool ZetBetaald(bool betaald)
+        {
+            if (betaald)
             {
-                newKlant.VoegBestellingToe(this);
+                return Betaald = true;
             }
-            Klant = newKlant;
+            else
+            {
+                return Betaald = false;
+            }
         }
 
-        public override bool Equals(object obj)
+        public override string ToString()
         {
-            return obj is Bestelling bestelling &&
-                   Bestellingsnummer == bestelling.Bestellingsnummer &&
-                   Datum == bestelling.Datum &&
-                   IsBetaald == bestelling.IsBetaald &&
-                   VerkoopPrijs == bestelling.VerkoopPrijs &&
-                   EqualityComparer<Klant>.Default.Equals(Klant, bestelling.Klant) &&
-                   EqualityComparer<Dictionary<Truitje, int>>.Default.Equals(_producten, bestelling._producten);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Bestellingsnummer, Datum, IsBetaald, VerkoopPrijs, Klant, _producten);
+            return base.ToString();
         }
     }
 }

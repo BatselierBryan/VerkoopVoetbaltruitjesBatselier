@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLayer.Model.Exceptions;
+using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Model
 {
-    public class Clubset
+    public class ClubSet
     {
         // Constructors
         public bool Thuis { get; private set;} // vs uit
         public int Versie { get; private set;}
 
-        public Clubset(bool thuis, int versie)
+        public ClubSet(bool thuis, int versie)
         {
             Thuis = thuis;
-            if (versie < 1) throw new ClubsetException("Clubset - versie less than one");
+            if (versie < 1) throw new ClubSetException("ClubSet - versie less than one");
             Versie = versie;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is Clubset clubset &&
+            return obj is ClubSet clubset &&
                    Thuis == clubset.Thuis &&
                    Versie == clubset.Versie;
         }
