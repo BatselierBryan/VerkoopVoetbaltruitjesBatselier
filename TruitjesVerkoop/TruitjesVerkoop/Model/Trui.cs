@@ -2,7 +2,7 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
 using BusinessLayer.Model;
 
-namespace BusinessLayer
+namespace BusinessLayer.Model
 {
     public class Trui: ITrui
     {

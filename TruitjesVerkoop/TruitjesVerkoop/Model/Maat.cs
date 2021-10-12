@@ -1,4 +1,4 @@
-namespace BusinessLayer
+namespace BusinessLayer.Model
 {
     public enum Maat
     {

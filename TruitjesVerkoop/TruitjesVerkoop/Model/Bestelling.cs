@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BusinessLayer.Exceptions;
 using BusinessLayer.Interface;
 
-namespace BusinessLayer
+namespace BusinessLayer.Model
 {
     public class Bestelling : IBestelling
     {

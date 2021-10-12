@@ -1,6 +1,6 @@
 using System;
 
-namespace BusinessLayer
+namespace BusinessLayer.Model
 {
     public class Competitie
     {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BusinessLayer.Model;
 
 namespace BusinessLayer.Interface
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using Xunit;
-using BusinessLayer.Model;
 using BusinessLayer.Exceptions;
 using BusinessLayer;
+using BusinessLayer.Model;
 
 namespace TestProjectBusinessLayer
 {
