@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer.Managers
+namespace BusinessLayer.Interfaces
 {
-    public class BestellingManager
+    public interface ITruiRepository
     {
+        void VoegTruiToe()
+        {
+
+        }
     }
 }

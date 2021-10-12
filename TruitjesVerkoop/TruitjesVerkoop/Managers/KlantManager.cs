@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Managers
 {
-    class KlantManager
+    public class KlantManager
     {
     }
 }
